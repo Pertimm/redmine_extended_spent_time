@@ -1,4 +1,3 @@
-# English strings go here for Rails i18n
 en:
   label_extended_spent_time_week: "week"
   label_extended_spent_time_options: "Display options:"
