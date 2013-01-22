@@ -11,14 +11,20 @@ sql_period = period - 1
   <%=l(:label_spent_time)%> (<%= l(:label_last_n_days, period) %>)
   <div class="spent-time-options-container">
     <span class="select-link-label"><%= l(:label_extended_spent_time_options) %></span>
-    <a href="?" id="1w" class="select-link <%= 'current' if period == 7 %>">1 <%= l(:label_extended_spent_time_week) %></a>
-    <a href="?" id="2w" class="select-link <%= 'current' if period == 14 %>">2 <%= l(:label_extended_spent_time_week).pluralize %></a>
-    <a href="?" id="3w" class="select-link <%= 'current' if period == 21 %>">3 <%= l(:label_extended_spent_time_week).pluralize %></a>
-    <a href="?" id="4w" class="select-link <%= 'current' if period == 28 %>">4 <%= l(:label_extended_spent_time_week).pluralize %></a>
-    <a href="?" id="5w" class="select-link <%= 'current' if period == 35 %>">5 <%= l(:label_extended_spent_time_week).pluralize %></a>
+    <a href="#" data-period="7" class="select-link <%= 'current' if period == 7 %>">
+      1 <%= l(:label_extended_spent_time_week) %></a>
+    <a href="#" data-period="14" class="select-link <%= 'current' if period == 14 %>">
+      2 <%= l(:label_extended_spent_time_weeks) %></a>
+    <a href="#" data-period="21" class="select-link <%= 'current' if period == 21 %>">
+      3 <%= l(:label_extended_spent_time_weeks) %></a>
+    <a href="#" data-period="28" class="select-link <%= 'current' if period == 28 %>">
+      4 <%= l(:label_extended_spent_time_weeks) %></a>
+    <a href="#" data-period="35" class="select-link <%= 'current' if period == 35 %>">
+      5 <%= l(:label_extended_spent_time_weeks) %></a>
   </div>
 </h3>
-<% 
+
+<%
 entries = TimeEntry.find(:all,
 				:conditions => ["#{TimeEntry.table_name}.user_id = ? AND #{TimeEntry.table_name}.spent_on BETWEEN ? AND ?", @user.id, Date.today - sql_period, Date.today],
 				:include => [:activity, :project, {:issue => [:tracker, :status]}],
@@ -49,8 +55,15 @@ entries_by_day = entries.group_by(&:spent_on)
     </tr>
     <% entries_by_day[day].each do |entry| -%>
     <tr class="time-entry" style="border-bottom: 1px solid #f5f5f5;">
-    <td class="activity"><%=h entry.activity %></td>
-    <td class="subject"><%=h entry.project %> <%= ' - ' + link_to_issue(entry.issue, :truncate => 50) if entry.issue %></td>
+    <td class="activity">
+      <%= entry.activity %>
+    </td>
+    <td class="subject">
+      <%= entry.project %>
+      <% if entry.issue %>
+        - <%= link_to_issue(entry.issue, :truncate => 50) %>
+      <% end %>
+    </td>
     <td class="comments"><%=h entry.comments %></td>
     <td class="hours"><%= html_hours("%.2f" % entry.hours) %></td>
     <td align="center">

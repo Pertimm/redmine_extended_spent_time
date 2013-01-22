@@ -1,0 +1,18 @@
+<% content_for :header_tags do %>
+  <%= stylesheet_link_tag 'style', :plugin => 'redmine_extended_spent_time' %>
+<% end %>
+
+<%= render :partial => 'my/blocks/log' %>
+
+<script type="text/javascript">
+//<![CDATA[
+jQuery(function(){
+  var base_url = "<%= url_for(:controller => 'extended_spent_time', :action => 'update') %>";
+  $('#timelog').on('click', 'a.select-link', function(event) {
+    event.preventDefault();
+    var url = base_url + "?period=" + $(this).data('period');
+    $('#timelog').load(url);
+  });
+});
+//]]>
+</script>

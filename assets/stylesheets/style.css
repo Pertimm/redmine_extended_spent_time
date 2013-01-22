@@ -11,16 +11,15 @@ h3 a.select-link{
 	font-weight:normal;
 	padding:1px 8px;
 }
-h3 a.select-link:hover{
-	color:#000;
-}
 h3 a.select-link.current{
-	border:1px solid #aaa;
+	border:1px solid #bbb;
 	background-color:#eee;
-	-moz-border-radius:10px;
 	-webkit-border-radius:10px;
-	border-radius:10px;
+	   -moz-border-radius:10px;
+	     -o-border-radius:10px;
+	        border-radius:10px;
 	text-shadow: 0 1px 0 #fff;
+	box-shadow:0 0 2px rgba(0,0,0,.15) inset;
 }
 h3 .spent-time-options-container{
 	float:right;
