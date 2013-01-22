@@ -1,5 +1,3 @@
-require 'redmine'
-
 Redmine::Plugin.register :redmine_extended_spent_time do
   name 'Redmine Extended Spent Time plugin'
   author 'Jean-Marie Vallet'
